@@ -1,0 +1,5 @@
+*.pyc
+
+spatialmedia/to_convert
+spatialmedia/converted
+
