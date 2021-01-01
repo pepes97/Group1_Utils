@@ -113,7 +113,7 @@ class Application(Frame):
 
         if audio_metadata:
             self.var_spatial_audio.set(1)
-            print audio_metadata.get_metadata_string()
+            print(audio_metadata.get_metadata_string())
 
         self.update_state()
 
@@ -175,7 +175,7 @@ class Application(Frame):
 
         if audio_metadata:
             self.var_spatial_audio.set(1)
-            print audio_metadata.get_metadata_string()
+            print(audio_metadata.get_metadata_string())
 
         self.update_state()
 
@@ -372,10 +372,13 @@ def main():
     root = Tk()
     Tk.report_callback_exception = report_callback_exception
     app = Application(master=root)
-    app.process_the_file("/home/marco/Downloads/fixed_sound_prova1.mp4")
-    app.process_the_file("/home/marco/Downloads/fixed_sound_prova2.mp4")
-    time.sleep(5)
-    app.mainloop()
+    ld = os.listdir("to_convert")
+    print(ld)
+    for f in ld:
+        os.system("ffmpeg -i video.mp4 -i ./to_convert/"+f+" -ar 44100 -shortest ./converted/"+f[:-4]+".mp4")
+        file_path = os.path.abspath("./converted/"+f[:-4]+".mp4")
+        app.process_the_file(file_path)
+    #app.mainloop()
     
 if __name__ == "__main__":
     main()
