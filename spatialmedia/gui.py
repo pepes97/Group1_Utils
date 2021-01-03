@@ -375,6 +375,7 @@ def main():
     ld = os.listdir("to_convert")
     print(ld)
     for f in ld:
+        # ffmpeg -loop 1 -i .\photo.jpg -c:v libx264 -t 60 -pix_fmt yuv420p -vf scale=8704:4352 video.mp4
         os.system("ffmpeg -i video.mp4 -i ./to_convert/"+f+" -ar 44100 -shortest ./converted/"+f[:-4]+".mp4")
         file_path = os.path.abspath("./converted/"+f[:-4]+".mp4")
         app.process_the_file(file_path)
