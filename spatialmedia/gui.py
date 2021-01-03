@@ -378,6 +378,8 @@ def main():
         os.system("ffmpeg -i video.mp4 -i ./to_convert/"+f+" -ar 44100 -shortest ./converted/"+f[:-4]+".mp4")
         file_path = os.path.abspath("./converted/"+f[:-4]+".mp4")
         app.process_the_file(file_path)
+        os.system('python upload_video.py --file="converted/'+f[:-4]+'_injected.mp4" --title="'+f[:-4]+'" --description="Caricamento automatico: '+f[:-4]+'" --privacyStatus="private"')
+        
     #app.mainloop()
     
 if __name__ == "__main__":
