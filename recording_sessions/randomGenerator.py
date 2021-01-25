@@ -146,9 +146,11 @@ def add_n_random_samples(n, samples_to_avoid):
 def writeCSV(list_of_samples):
     
     with open('positions.csv', 'w', newline='') as file:
-        file.write("X, Y, Z\n")
+        file.write("ID, X, Y, Z\n")
+        id = 1
         for s in list_of_samples:
-            file.write(f"{s[0]}, {s[1]}, {s[2]}\n")
+            file.write(f"{id}, {s[0]}, {s[1]}, {s[2]}\n")
+            id += 1
         
 
 samples_cube1 = insertCube(1.5, 1.5, 0.5, 0.5)
@@ -160,27 +162,28 @@ total_samples = samples_cube1 + samples_cube2
 random_samples1 = add_n_random_samples(80, samples)
 total_samples += random_samples1
 
+def plot_samples(samples):
+    fig, ax = plt.subplots(figsize=(10, 9))
+    plt.title('3D view')
+    ax = plt.axes(projection ="3d")
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z (Layers)')
 
-fig, ax = plt.subplots(figsize=(10, 9))
-plt.title('3D view')
-ax = plt.axes(projection ="3d")
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-ax.set_zlabel('Z (Layers)')
+    x = [s[0] for s in samples]
+    y = [s[1] for s in samples]
+    z = [s[2] for s in samples]
 
-
-x = [s[0] for s in total_samples]
-y = [s[1] for s in total_samples]
-z = [s[2] for s in total_samples]
-
-ax.scatter3D(x, y, z, zdir='z', c='red')
-plt.savefig("map3D.png")
+    ax.scatter3D(x, y, z, zdir='z', c='red')
+    #plt.savefig("map3D.png")
 #plt.show()
+plot_samples(total_samples)
+plt.savefig("map3D.png")
 
 random_samples1 = plot_layers(random_samples1, "random80")
 #print(random_samples1)
 total_samples = samples_cube1 + samples_cube2 + random_samples1
-
+print(len(total_samples))
 writeCSV(total_samples)
 
 plt.show()
